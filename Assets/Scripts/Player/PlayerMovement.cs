@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float _horizontalMoveSpeed = 3f;
+    public float _horizontalMoveSpeed = 10f;
     public float 
         _verticalMovementSpeed = 4f;
+
+    public bool isJumping = false;
+    public bool comingDown = false;
+    public GameObject playerObj;
 
     // Update is called once per frame
     void Update()
@@ -29,16 +33,51 @@ public class PlayerMovement : MonoBehaviour
            
 
         }
-        
-       /* if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * _horizontalMoveSpeed, Space.World);
+            
+            if(isJumping==false)
+            {
+                isJumping = true;
+                playerObj.GetComponent<Animator>().Play("Jump");
+                StartCoroutine(JumpSequence());
+            }
+                transform.Translate(Vector3.right * Time.deltaTime * _verticalMovementSpeed);
+
+
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+
+        /* if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+         {
+             transform.Translate(Vector3.forward * Time.deltaTime * _horizontalMoveSpeed, Space.World);
+         }
+         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+         {
+             transform.Translate(Vector3.back * Time.deltaTime * _horizontalMoveSpeed, Space.World);
+         }*/
+
+        if(isJumping==true)
         {
-            transform.Translate(Vector3.back * Time.deltaTime * _horizontalMoveSpeed, Space.World);
-        }*/
-
-
+            if(comingDown==false)
+            {
+                transform.Translate(Vector3.up * Time.deltaTime * 6, Space.World);
+            }
+            if (comingDown == true)
+            {
+                transform.Translate(Vector3.up * Time.deltaTime * -6, Space.World);
+            }
+        }
     }
+
+    IEnumerator JumpSequence()
+    {
+        yield return new WaitForSeconds(0.45f);
+        comingDown = true;
+        yield return new WaitForSeconds(0.45f);
+        isJumping = false;
+        comingDown = false;
+        playerObj.GetComponent<Animator>().Play("Standard Run");
+    }
+
 }
+
