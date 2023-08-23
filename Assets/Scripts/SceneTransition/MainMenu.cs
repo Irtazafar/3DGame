@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void playGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void restartGame()
@@ -17,6 +17,10 @@ public class MainMenu : MonoBehaviour
 
     public void mainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void loadLauncher()
+    {
+        SceneManager.LoadScene("Launcher");
     }
 }

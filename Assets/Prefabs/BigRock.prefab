@@ -119,8 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565f51f0a1d2b5f4199461061192cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crashSound: {fileID: 0}
   _player: {fileID: 0}
   charModel: {fileID: 0}
+  levelControl: {fileID: 0}
 --- !u!1001 &6930470858284615784
 PrefabInstance:
   m_ObjectHideFlags: 0
