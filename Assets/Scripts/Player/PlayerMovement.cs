@@ -6,7 +6,7 @@ using Photon;
 using Photon.Pun;
 using Unity.VisualScripting;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     public float _horizontalMoveSpeed = 10f;
     public float 

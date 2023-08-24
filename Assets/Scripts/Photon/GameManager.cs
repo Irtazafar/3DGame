@@ -1,46 +1,18 @@
-﻿/*
- * Copyright (c) 2019 Razeware LLC
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish, 
- * distribute, sublicense, create a derivative work, and/or sell copies of the 
- * Software in any work that is designed, intended, or marketed for pedagogical or 
- * instructional purposes related to programming, coding, application development, 
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works, 
- * or sale is expressly withheld.
- *    
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
+﻿
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using Photon.Realtime;
+using Photon.Pun;
 
-namespace Photon.Pun.Demo.PunBasics
-{
+
     public class GameManager : MonoBehaviourPunCallbacks
     {
         public GameObject winnerUI;
 
         public GameObject player1SpawnPosition;
         public GameObject player2SpawnPosition;
+
 
         private GameObject player1;
         private GameObject player2;
@@ -54,8 +26,6 @@ namespace Photon.Pun.Demo.PunBasics
                 return;
             }
 
-            if (PlayerManager.LocalPlayerInstance == null)
-            {
                 if (PhotonNetwork.IsMasterClient) // 2
                 {
                     Debug.Log("Instantiating Player 1");
@@ -63,23 +33,28 @@ namespace Photon.Pun.Demo.PunBasics
                     player1 = PhotonNetwork.Instantiate("Player",
                         player1SpawnPosition.transform.position,
                         player1SpawnPosition.transform.rotation, 0);
+
+                 
                 }
                 else // 5
                 {
                     player2 = PhotonNetwork.Instantiate("Player",
                         player2SpawnPosition.transform.position,
                         player2SpawnPosition.transform.rotation, 0);
+
                 }
-            }
+            
         }
 
 
+       
         // Update Method
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape)) //1
             {
-                Application.Quit();
+                //Application.Quit();
+                EndGame();
             }
         }
 
@@ -90,6 +65,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel("Launcher");
+                EndGame();
             }
         }
 
@@ -99,5 +75,26 @@ namespace Photon.Pun.Demo.PunBasics
             Application.Quit();
         }
 
+        public void EndGame()
+        {
+            /*int player1Coins = CollectibleController.GetPlayerCoins(photonView);
+            int player2Coins = CollectibleController.GetPlayerCoins(player2);
+
+            Debug.Log("Player 1 Coins: " + player1Coins);
+            Debug.Log("Player 2 Coins: " + player2Coins);
+
+            if (player1Coins > player2Coins)
+            {
+                Debug.Log("Player 1 wins!");
+            }
+            else if (player2Coins > player1Coins)
+            {
+                Debug.Log("Player 2 wins!");
+            }
+            else
+            {
+                Debug.Log("It's a tie!");
+            }*/
+        }
     }
-}
+
