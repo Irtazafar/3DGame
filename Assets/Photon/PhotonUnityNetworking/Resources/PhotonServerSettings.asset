@@ -46,6 +46,12 @@ MonoBehaviour:
   - CollectCoinRPC
   - DeactivateCoinRPC
   - UpdateCoinUI
+  - DeclareWinnerRPC
+  - PauseAllPlayerRPC
+  - ResumeAllPlayerRPC
+  - RestartGameRPC
+  - DeclareWinnerRPCTwo
+  - DeclareLoserRPCTwo
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using UnityEngine;
 
 
 public class CollectCoin : MonoBehaviourPunCallbacks
@@ -22,7 +20,8 @@ public class CollectCoin : MonoBehaviourPunCallbacks
             CollectibleController collectibleController = levelControl.GetComponent<CollectibleController>();
             if (collectibleController != null)
             {
-                collectibleController.CollectCoinLocally();
+                int playerActorNumber = photonView.OwnerActorNr;
+                collectibleController.CollectCoinLocally(playerActorNumber);
             }
         }
         photonView.RPC("DeactivateCoinRPC", RpcTarget.All);

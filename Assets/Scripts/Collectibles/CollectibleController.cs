@@ -1,5 +1,4 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +7,12 @@ public class CollectibleController : MonoBehaviour
 {
     public int coinTotal = 0;
 
+    private Dictionary<int, int> playerCoinCounts = new Dictionary<int, int>();
+
     public GameObject coinTextDisplay;
     public GameObject endcoinTextDisplay;
 
-    private PhotonView photonView; // Initialize this in Start or Awake
+    private PhotonView photonView;
 
     private void Start()
     {
@@ -20,22 +21,44 @@ public class CollectibleController : MonoBehaviour
     }
 
 
-    public void CollectCoinLocally()
+    public void CollectCoinLocally(int playerActorNumber)
     {
-        coinTotal += 1;
-        coinTextDisplay.GetComponent<Text>().text = "" + coinTotal;
-        endcoinTextDisplay.GetComponent<Text>().text = "" + coinTotal;
-    }
-    public int GetPlayerCoins(GameObject player)
-    {
-        if (player != null)
+        if (!playerCoinCounts.ContainsKey(playerActorNumber))
         {
-            CollectibleController collectibleController = player.GetComponent<CollectibleController>();
-            if (collectibleController != null)
-            {
-                return coinTotal;
-            }
+            playerCoinCounts[playerActorNumber] = 0;
         }
-        return 0;
+
+        playerCoinCounts[playerActorNumber] += 1;
+        UpdateCoinUI(playerActorNumber);
+    }
+
+    private void UpdateCoinUI(int playerActorNumber)
+    {
+        if (playerCoinCounts.ContainsKey(playerActorNumber))
+        {
+            int coins = playerCoinCounts[playerActorNumber];
+            coinTextDisplay.GetComponent<Text>().text = "" + coins;
+            endcoinTextDisplay.GetComponent<Text>().text = "" + coins;
+        }
+    }
+
+    public Dictionary<int, int> GetPlayerCoinCounts()
+    {
+        return playerCoinCounts;
+    }
+
+    // IPunObservable implementation for synchronization
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // Sending data to the network
+            stream.SendNext(playerCoinCounts);
+        }
+        else
+        {
+            // Receiving data from the network
+            playerCoinCounts = (Dictionary<int, int>)stream.ReceiveNext();
+        }
     }
 }

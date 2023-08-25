@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using Photon;
 using Photon.Pun;
-using Unity.VisualScripting;
+using System.Collections;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     public float _horizontalMoveSpeed = 10f;
-    public float 
+    public float
         _verticalMovementSpeed = 4f;
 
     public bool isJumping = false;
@@ -46,7 +42,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             {
                 if (this.gameObject.transform.position.x < LevelControl.rightSide)
                 {
-                   transform.Translate(Vector3.right * Time.deltaTime * _verticalMovementSpeed);
+                    transform.Translate(Vector3.right * Time.deltaTime * _verticalMovementSpeed);
                 }
 
 

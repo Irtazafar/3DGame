@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
-    public string parentName; 
+    public string parentName;
     // Update is called once per frame
     void Start()
     {
@@ -14,7 +13,7 @@ public class Destroy : MonoBehaviour
     IEnumerator DestroyClone()
     {
         yield return new WaitForSeconds(80);
-        if(parentName=="Section(Clone)")
+        if (parentName == "Section(Clone)")
         {
             Destroy(gameObject);
         }
